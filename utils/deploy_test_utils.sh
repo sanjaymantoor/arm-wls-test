@@ -60,7 +60,7 @@ function cloneTestRepository()
 function hardCodePIDs()
 {
 	gitWorkDirectory=$1
-	cd ${gitWorkDirectory}/weblogic-azure-outbound
+	cd ${gitWorkDirectory}/weblogic-azure
 	pwd
 	pidKeys=`cat resources/pid.properties | cut -f1 -d"=" | grep -v '#' | grep -v "^$"`
 	for pidKey in $pidKeys
@@ -102,7 +102,7 @@ function createNewGitBranch()
 	skuUrnVersion=$7
 	gitGlobalSettings $gitUserEmail $gitUser
 	cloneTestRepository ${gitRepoURL} ${gitWorkDirectory}
-	cd ${gitWorkDirectory}/weblogic-azure-outbound
+	cd ${gitWorkDirectory}/weblogic-azure
 	echo "Creating test branch ${testBranchName}"
 	git checkout -b ${testBranchName}
 	git remote add ${testBranchName} ${gitRepoURL}
@@ -110,11 +110,11 @@ function createNewGitBranch()
 	#addTestDeployment $gitWorkDirectory
 	#updateOfferName $gitWorkDirector
 	hardCodePIDs ${gitWorkDirectory}	 
-	cd ${gitWorkDirectory}/weblogic-azure-outbound 
+	cd ${gitWorkDirectory}/weblogic-azure
     git commit -a -m "Hardcode pids"
-    echo "git push https://${gitUser}:${gitToken}@github.com/${gitUser}/weblogic-azure-outbound.git --all"
-    #git push origin ${testBranchName} --repo https://${gitUser}:${gitToken}@github.com/${gitUser}/weblogic-azure-outbound.git
-    git push https://${gitUser}:${gitToken}@github.com/${gitUser}/weblogic-azure-outbound.git --all
+    echo "git push https://${gitUser}:${gitToken}@github.com/${gitUser}/weblogic-azure.git --all"
+    #git push origin ${testBranchName} --repo https://${gitUser}:${gitToken}@github.com/${gitUser}/weblogic-azure.git
+    git push https://${gitUser}:${gitToken}@github.com/${gitUser}/weblogic-azure.git --all
     checkSuccess $? "Pushing changes to git failed"
 }
 
@@ -125,8 +125,8 @@ function deleteGitBranch()
 	gitUser=$2
 	gitToken=$3
 	testBranchName=$4
-	cd $gitWorkDirectory/weblogic-azure-outbound
-	git push https://${gitToken}@github.com/${gitUser}/weblogic-azure-outbound.git -f --delete ${testBranchName}
+	cd $gitWorkDirectory/weblogic-azure
+	git push https://${gitToken}@github.com/${gitUser}/weblogic-azure.git -f --delete ${testBranchName}
 	checkSuccess $? "Delete brach ${testBranchName} failed"
 }
 
@@ -303,7 +303,7 @@ function updateSKU()
 {
 	skuUrnVersion=$1
 	gitWorkDirectory=$2
-	cd ${gitWorkDirectory}/weblogic-azure-outbound
+	cd ${gitWorkDirectory}/weblogic-azure
 	#templatesList=`grep -rn '"skuUrnVersion": {' | cut -f1 -d":" | sort| uniq`
 	templatesList="weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/mainTemplate.json  
 				   weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/nestedtemplates/adminTemplateForCustomSSL.json 
@@ -331,7 +331,7 @@ function addTestDeployment()
 {
  
  	gitWorkDirectory=$1
-	cd ${gitWorkDirectory}/weblogic-azure-outbound
+	cd ${gitWorkDirectory}/weblogic-azure
 	templatesList="weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/nestedtemplates/adminTemplateForCustomSSL.json
 				   weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/nestedtemplates/adminTemplate.json
 				   weblogic-azure-vm/arm-oraclelinux-wls-cluster/arm-oraclelinux-wls-cluster/src/main/arm/nestedtemplates/clusterCustomSSLTemplate.json 
@@ -368,7 +368,7 @@ function addTestDeployment()
 function updateOfferName()
 {
 	gitWorkDirectory=$1
-	cd ${gitWorkDirectory}/weblogic-azure-outbound
+	cd ${gitWorkDirectory}/weblogic-azure
 		templatesList="weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/mainTemplate.json  
 				   weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/nestedtemplates/adminTemplateForCustomSSL.json 
 				   weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/nestedtemplates/adminTemplate.json 

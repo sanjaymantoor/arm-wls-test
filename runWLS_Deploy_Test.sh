@@ -3,7 +3,7 @@
 
 usage() { echo "Usage: $0 WLS_GITHUB_REPOSITORY GIT_USER GIT_TOKEN DEPLOY_OFFER GIT_USER_EMAIL RESOURCE_GROUP_NAME \
 				SKU_VERSION PARAMETERS_FILE_PATH RUN_TESTS TEST_INPUT_FILE ADDITIONAL_DEPLOYMENT_PARAMETERS ADDITIONAL_TEST_PARAMETERS
-  WLS_GITHUB_REPOSITORY            : WebLogic azure repository. https://github.com/<user>/weblogic-azure-outbound.git
+  WLS_GITHUB_REPOSITORY            : WebLogic azure repository. https://github.com/<user>/weblogic-azure.git
   DEPLOY_OFFER                     : admin,cluster,dynamic
   LOCATION						   : Resource group location
   PARAMETERS_FILE_PATH             : json file name available under arm-wls-patch-test/offer_parameters
@@ -20,9 +20,9 @@ usage() { echo "Usage: $0 WLS_GITHUB_REPOSITORY GIT_USER GIT_TOKEN DEPLOY_OFFER 
 function cleanup()
 {
 	cd $WORK_DIRECTORY
-	if [ -d weblogic-azure-outbound ];
+	if [ -d weblogic-azure ];
 	then
-		rm -rf weblogic-azure-outbound
+		rm -rf weblogic-azure
 	fi
 	
 }
@@ -98,7 +98,7 @@ azureCLICheck
 case "${DEPLOY_OFFER}" in 
 	"admin")
 			if [[ -z $RAW_MAIN_TEMPLATE_URL ]]; then
-				RAW_MAIN_TEMPLATE_URL="https://raw.githubusercontent.com/$GIT_USER/weblogic-azure-outbound/$TEST_BRANCH_NAME/weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/mainTemplate.json"
+				RAW_MAIN_TEMPLATE_URL="https://raw.githubusercontent.com/$GIT_USER/weblogic-azure/$TEST_BRANCH_NAME/weblogic-azure-vm/arm-oraclelinux-wls-admin/src/main/arm/mainTemplate.json"
 			fi
 			deployAdminOffer $PARAMETERS_FILE_PATH $RESOURCE_GROUP_NAME $RAW_MAIN_TEMPLATE_URL $LOCATION $SKU_VERSION $ADDITIONAL_DEPLOYMENT_PARAMETERS
 			TEST_ADMIN_OFFER_SCRIPT="runAdminOfferTest.sh" 
@@ -108,7 +108,7 @@ case "${DEPLOY_OFFER}" in
 	
 	"cluster")
 			if [[ -z $RAW_MAIN_TEMPLATE_URL ]]; then
-				RAW_MAIN_TEMPLATE_URL="https://raw.githubusercontent.com/$GIT_USER/weblogic-azure-outbound/$TEST_BRANCH_NAME/weblogic-azure-vm/arm-oraclelinux-wls-cluster/arm-oraclelinux-wls-cluster/src/main/arm/mainTemplate.json"
+				RAW_MAIN_TEMPLATE_URL="https://raw.githubusercontent.com/$GIT_USER/weblogic-azure/$TEST_BRANCH_NAME/weblogic-azure-vm/arm-oraclelinux-wls-cluster/arm-oraclelinux-wls-cluster/src/main/arm/mainTemplate.json"
 			fi
 			deployClusterOffer $PARAMETERS_FILE_PATH $RESOURCE_GROUP_NAME $RAW_MAIN_TEMPLATE_URL $LOCATION $SKU_VERSION $ADDITIONAL_DEPLOYMENT_PARAMETERS
 			TEST_CLUSTER_OFFER_SCRIPT="runClusterOfferTest.sh"
@@ -119,7 +119,7 @@ case "${DEPLOY_OFFER}" in
 			
 	"dynamic")
 			if [[ -z $RAW_MAIN_TEMPLATE_URL ]]; then
-				RAW_MAIN_TEMPLATE_URL="https://raw.githubusercontent.com/$GIT_USER/weblogic-azure-outbound/$TEST_BRANCH_NAME/weblogic-azure-vm/arm-oraclelinux-wls-dynamic-cluster/arm-oraclelinux-wls-dynamic-cluster/src/main/arm/mainTemplate.json"
+				RAW_MAIN_TEMPLATE_URL="https://raw.githubusercontent.com/$GIT_USER/weblogic-azure/$TEST_BRANCH_NAME/weblogic-azure-vm/arm-oraclelinux-wls-dynamic-cluster/arm-oraclelinux-wls-dynamic-cluster/src/main/arm/mainTemplate.json"
 			fi
 			deployClusterOffer $PARAMETERS_FILE_PATH $RESOURCE_GROUP_NAME $RAW_MAIN_TEMPLATE_URL $LOCATION $SKU_VERSION $ADDITIONAL_DEPLOYMENT_PARAMETERS
 			TEST_CLUSTER_OFFER_SCRIPT="runClusterOfferTest.sh"
